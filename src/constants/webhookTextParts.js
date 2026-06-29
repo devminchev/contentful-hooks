@@ -18,14 +18,15 @@ export const WEBHOOK_SUFFIXES = {
     'mlSections': '[Update] OpenSearch - ml sections',
     'mlDefaults': '[Update] OpenSearch - ml defaults',
     'gamesV3': '[Update] OpenSearch - V3 gameV2',
+    'gamesV4': '[Update] [Lambda] OpenSearch - V3 gameV2 and siteGameV2',
     'siteGamesV3': '[Update] OpenSearch - V3 siteGameV2',
     'themes': '[Update] OpenSearch - theme',
     
     // Delete webhooks
     'generalDelete': '[Delete] OpenSearch - General',
     'gameV2Delete': '[Delete] OpenSearch - GameV2',
-    'generalDeleteV3': '[Delete] OpenSearch - General',
-    'gameV2DeleteV3': '[Delete] OpenSearch - GameV2',
+    'generalDeleteV3': '[Delete] OpenSearch - General V3',
+    'gameV2DeleteV3': '[Delete] OpenSearch - GameV2 V3',
     'archivedGamesDelete': '[Delete] OpenSearch - Delete from Archive on Publish'
 };
 
@@ -49,6 +50,7 @@ export const WEBHOOK_TYPE_VERSIONS = {
     'mlSections': 'v3',
     'mlDefaults': 'v3',
     'gamesV3': 'v3',
+    'gamesV4': 'v3',
     'siteGamesV3': 'v3',
     'themes': 'v3',
     'venturesV3': 'v3',

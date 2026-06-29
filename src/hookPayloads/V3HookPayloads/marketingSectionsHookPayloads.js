@@ -3,7 +3,7 @@ import { sharedEnvFilter, setConflictRefreshBehaviour } from '../common/shared.j
 import { pickHookTopic, createHookName } from '../../utils.js';
 import { WEBHOOK_SUFFIXES } from '../../constants/webhookTextParts.js';
 
-const CONTENTFUL_MARKETING_SECTIONS_MODEL_REGEX = '^(igMarketingSection|igBanner|igBrazePromosSection|igPromotionsGrid)$';
+const CONTENTFUL_MARKETING_SECTIONS_MODEL_REGEX = '^(igMarketingSection|igBanner|igBrazePromosSection|igPromotionsGrid|igContentPlaceholder)$';
 
 export const MARKETING_SECTIONS_HOOK_CUSTOM_PAYLOAD = {
     id: "{/payload/sys/id}",
@@ -28,7 +28,8 @@ export const MARKETING_SECTIONS_HOOK_CUSTOM_PAYLOAD = {
     representativeColor: "{/payload/fields/representativeColor}",
     bannerLink: "{/payload/fields/bannerLink}",
     displayType: "{/payload/fields/displayType}",
-    displaySize: "{/payload/fields/displaySize}"
+    displaySize: "{/payload/fields/displaySize}",
+    placeholderType: "{/payload/fields/placeholderType}"
 
 };
 export const createMarketingSectionsHookUrl = (osHost, nodeEnv = 'dev') => {

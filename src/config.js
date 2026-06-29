@@ -6,7 +6,8 @@ export const getConfig = () => ({
             OS_PASS: process.env.DEV_OS_PASS,
             CONTENTFUL_ENV: process.env.DEV_CONTENTFUL_ENV || 'dev',
             CONTENTFUL_API_TOKEN: process.env.DEV_EU_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.DEV_EU_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.DEV_EU_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.DEV_EU_BACKOFFICE_LAMBDA_URL
         },
         stg: {
             OS_HOST: process.env.STG_OS_HOST,
@@ -14,7 +15,8 @@ export const getConfig = () => ({
             OS_PASS: process.env.STG_OS_PASS,
             CONTENTFUL_ENV: process.env.STG_CONTENTFUL_ENV || 'dev',
             CONTENTFUL_API_TOKEN: process.env.STG_EU_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.STG_EU_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.STG_EU_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.STG_EU_BACKOFFICE_LAMBDA_URL
         },
         prod: {
             OS_HOST: process.env.PROD_OS_HOST,
@@ -22,7 +24,8 @@ export const getConfig = () => ({
             OS_PASS: process.env.PROD_OS_PASS,
             CONTENTFUL_ENV: process.env.PROD_CONTENTFUL_ENV || 'master',
             CONTENTFUL_API_TOKEN: process.env.PROD_EU_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.PROD_EU_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.PROD_EU_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.PROD_EU_BACKOFFICE_LAMBDA_URL
         }
     },
     na: {
@@ -32,7 +35,9 @@ export const getConfig = () => ({
             OS_PASS: process.env.NA_DEV_OS_PASS,
             CONTENTFUL_ENV: process.env.NA_DEV_CONTENTFUL_ENV || 'dev',
             CONTENTFUL_API_TOKEN: process.env.NA_DEV_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.NA_DEV_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.NA_DEV_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.NA_DEV_BACKOFFICE_LAMBDA_URL
+
         },
         stg: {
             OS_HOST: process.env.NA_STG_OS_HOST,
@@ -40,7 +45,9 @@ export const getConfig = () => ({
             OS_PASS: process.env.NA_STG_OS_PASS,
             CONTENTFUL_ENV: process.env.NA_STG_CONTENTFUL_ENV || 'dev',
             CONTENTFUL_API_TOKEN: process.env.NA_STG_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.NA_STG_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.NA_STG_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.NA_STG_BACKOFFICE_LAMBDA_URL
+
         },
         prod: {
             OS_HOST: process.env.NA_PROD_OS_HOST,
@@ -48,7 +55,9 @@ export const getConfig = () => ({
             OS_PASS: process.env.NA_PROD_OS_PASS,
             CONTENTFUL_ENV: process.env.NA_PROD_CONTENTFUL_ENV || 'master',
             CONTENTFUL_API_TOKEN: process.env.NA_PROD_CONTENTFUL_BEARER_TOKEN,
-            CONTENTFUL_SPACE: process.env.NA_PROD_CONTENTFUL_SPACE
+            CONTENTFUL_SPACE: process.env.NA_PROD_CONTENTFUL_SPACE,
+            BACKOFFICE_LAMBDA_URL: process.env.NA_PROD_BACKOFFICE_LAMBDA
+
         }
     }
     

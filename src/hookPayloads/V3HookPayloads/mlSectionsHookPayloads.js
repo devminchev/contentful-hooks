@@ -29,6 +29,7 @@ export const ML_SECTIONS_HOOK_CUSTOM_PAYLOAD = {
     viewAllType: "{/payload/fields/viewAllType}",
     viewAllAction: "{/payload/fields/viewAllAction}",
     expandedSectionLayoutType: "{/payload/fields/expandedSectionLayoutType}",
+    sort: "{/payload/fields/sort}"
     
 };
 export const createMlSectionsHookUrl = (osHost, nodeEnv = 'dev') => {

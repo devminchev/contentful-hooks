@@ -82,57 +82,159 @@ All commands can be run through Yarn scripts or by invoking `node src/index.js` 
 contentful-hooks [command] [options]
 ```
 
-### Create V2 webhooks
-Provision the full iGaming lobby webhook suite for the selected jurisdiction/environment.
+## Commands
+
+### `create`
+
+Create all standard webhooks for the configured environment.
+
+📋 **[Create workflow breakdown →](docs/webhook-create-workflow.md)**
+
 ```bash
 yarn hook:create
-# or
-yarn node src/index.js create
 ```
 
-### Create V3 webhooks
-Provision the V3 API-specific webhooks (navigation, views, ML sections, etc.).
+*No additional options.*
+
+---
+
+### `create-v3`
+
+Create webhooks specifically for the V3 implementation.
+
 ```bash
 yarn hook:create:v3
 ```
 
-### Update V2 webhooks
-Rebuild specific webhook payloads (identified by ID) with the latest configuration.
+*No additional options.*
+
+---
+
+### `update`
+
+Update existing V2 webhooks by their IDs. The tool automatically identifies the webhook type from the webhook name and updates it with the latest payload configuration.
+
 ```bash
-yarn hook:update --ids abc123,def456
+yarn hook:update --ids <webhookIds>
 ```
 
-### Update V3 webhooks
-```bash
-yarn hook:update:v3 --ids abc123,def456
-```
-Each update command automatically detects the webhook type from its `[Lobby] [ENV] ...` name, rebuilds the payload, and issues a versioned `PUT` request.
+#### Options
 
-### Delete webhooks
-Delete one, an environment slice, or every owned webhook.
+* `--ids <webhookIds>`: Comma-separated list of webhook IDs to update. **Required**.
+
+#### Examples
+
 ```bash
-# Single webhook
-yarn delete:one   # (configure the ID inside package.json script)
+# Update a single V2 webhook
+yarn hook:update --ids abc123
+
+# Update multiple V2 webhooks
+yarn hook:update --ids abc123,def456,ghi789
+
+# alternatively, using node directly
+node src/index.js update --ids abc123,def456
+```
+
+📋 **[Update workflow breakdown →](docs/webhook-update-workflow.md)**
+
+---
+
+### `update-v3`
+
+Update existing V3 webhooks by their IDs. The tool automatically identifies the webhook type from the webhook name and updates it with the latest V3 payload configuration.
+
+```bash
+yarn hook:update:v3 --ids <webhookIds>
+```
+
+#### Options
+
+* `--ids <webhookIds>`: Comma-separated list of webhook IDs to update. **Required**.
+
+#### Examples
+
+```bash
+# Update a single V3 webhook
+yarn hook:update:v3 --ids abc123
+
+# Update multiple V3 webhooks
+yarn hook:update:v3 --ids abc123,def456,ghi789
+
+# alternatively, using node directly
+node src/index.js update-v3 --ids abc123,def456
+```
+
+**Note**: The update commands automatically:
+- Identify the webhook type from the webhook name
+- Extract environment details from the existing webhook
+- Rebuild the webhook using the latest payload configuration
+- Maintain proper version control with optimistic locking
+
+
+---
+
+### `delete`
+
+Delete existing webhooks. You must provide one of the following options:
+
+* `--one <webhookId>`: Delete a single webhook by its ID.
+* `--env <environment>`: Delete all webhooks in the given environment. Valid values are `[DEV]`, `[STG]`, or `[PROD]`.
+* `--all`: Delete *all* owned webhooks.
+
+#### Examples
+
+```bash
+# Delete a single webhook by ID
+yarn delete:one // this requires to amend the webhook id in the package.json
+
+# alternatively
 node src/index.js delete --one abc123
 
-# All hooks for a single environment value: [DEV], [STG], [PROD]
+# Delete all webhooks syncing to [DEV] OS
 yarn delete:env:dev
-node src/index.js delete --env [DEV]
 
-# Every webhook owned by this tool
+# Delete every webhook you own
 yarn delete:all
-node src/index.js delete --all
 ```
-See `docs/webhook-*-workflow.md` for deep dives into each command.
+
+📋 **[Delete workflow breakdown →](docs/webhook-delete-workflow.md)**
+
+---
+
+## Global Options
+
+* `-V, --version` Display the current version of the tool.
+* `-h, --help` Show help information for a command.
+
+---
+
+## Environment & Configuration
+
+Before running any commands, ensure you have set the following environment variables (or configured them in your `.env` file)
+
+---
 
 ## Contributing
-1. Fork the repository and create a feature branch.
+
+1. Fork the repo
+2. Create a feature branch
+
    ```bash
    git checkout -b feature/my-feature
    ```
-2. Install dependencies and make your changes.
-3. Run the relevant commands (create/update/delete) against a sandbox Contentful environment.
-4. Commit using conventional commit messages and open a Pull Request.
+3. Commit your changes
+
+   ```bash
+   git commit -m "Add my feature"
+   ```
+4. Push to branch
+
+   ```bash
+   git push origin feature/my-feature
+   ```
+5. Open a Pull Request
+
+---
 
 ## License
 Internal tooling – see Bally's organizational guidelines for usage.

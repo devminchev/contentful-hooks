@@ -16,6 +16,7 @@ import { marketingSectionsHookBodyParams } from '../hookPayloads/V3HookPayloads/
 import { mlSectionsBodyParams } from '../hookPayloads/V3HookPayloads/mlSectionsHookPayloads.js';
 import { mlDefaultsHookBodyParams } from '../hookPayloads/V3HookPayloads/mlDefaultsHookPayloads.js';
 import { gamesHookBodyParams } from '../hookPayloads/V3HookPayloads/gamesHookPayloads.js';
+import { gamesHookLambdaBodyParams } from '../hookPayloads/V3HookPayloads/gamesHookPayloads_Lambda.js';
 import { siteGamesHookBodyParams } from '../hookPayloads/V3HookPayloads/siteGamesHookPayloads.js';
 import { themesHookBodyParams } from '../hookPayloads/V3HookPayloads/themesHookPayloads.js';
 
@@ -75,6 +76,7 @@ export const gameSectionsHook = async ({environment, osHost, contentfulEnv, cred
     const payload = hookBuilder(gameSectionsBodyParams(environment.toUpperCase(), osHost, contentfulEnv), environment, credentials, "PUT");
     await createWebhook(client, payload);
 };
+
 export const marketingSectionsHook = async ({environment, osHost, contentfulEnv, credentials, client}) => {
     const payload = hookBuilder(marketingSectionsHookBodyParams(environment.toUpperCase(), osHost, contentfulEnv), environment, credentials, "PUT");
     await createWebhook(client, payload);
@@ -89,6 +91,12 @@ export const mlDefaultsHook = async ({environment, osHost, contentfulEnv, creden
 };
 export const gamesHook = async ({environment, osHost, contentfulEnv, credentials, client}) => {
     const payload = hookBuilder(gamesHookBodyParams(environment.toUpperCase(), osHost, contentfulEnv), environment, credentials, "PUT");
+    await createWebhook(client, payload);
+};
+
+// GamesV2 webhook using lambda to write to OS
+export const gamesHookLambda = async ({environment, backofficeUrl, contentfulEnv, credentials, client}) => {
+    const payload = hookBuilder(gamesHookLambdaBodyParams(environment.toUpperCase(), backofficeUrl, contentfulEnv), environment, credentials, "POST", 'create', false);
     await createWebhook(client, payload);
 };
 

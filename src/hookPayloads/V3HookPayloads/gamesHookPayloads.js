@@ -4,9 +4,14 @@ import { pickHookTopic, createHookName } from '../../utils.js';
 import { WEBHOOK_SUFFIXES } from '../../constants/webhookTextParts.js';
 import { GAME_V2_MODEL } from '../common/contentfulModels.js';
 
+// Please DO NOT use this webhook if you are already using the gamesV2 webhook that uses lambda - `gamesHookPayloads_Lambda.js`, 
+// as they both write to the same index, but with different body shapes and using both will result in data being messed up!
+// This webhook is only compatible with games idex using dynamic mapping!
+
 export const GAME_V2_HOOK_CUSTOM_PAYLOAD = {
     game_to_sitegame: {"name": "game"},
     game: {
+        metadataTags: "{/metadata/tags}",
         id: "{/payload/sys/id}",
         contentType: "{/payload/sys/contentType/sys/id}",
         entryTitle: "{/payload/fields/entryTitle}",

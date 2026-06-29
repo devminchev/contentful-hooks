@@ -13,22 +13,25 @@ export const sharedEnvFilter = (contentfulEnv) => ({
     ]
 });
 
-export const crateSharedHeaders = (base64Credentials) => {
+export const crateSharedHeaders = (base64Credentials, includeAuth) => {
     const headers = [
         {
             "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/115.0",
             "key": "User-Agent"
         },
         {
-            "key": "Authorization",
-            "value": `Basic ${base64Credentials}`,
-            "secret": true
-        },
-        {
             "key": "X-Query-Metadata",
             "value": `type: {/payload/sys/type}, contentType: {/payload/sys/contentType/sys/id}`
         }
     ];
+
+    if (includeAuth) {
+        headers.push({
+            key: "Authorization",
+            value: `Basic ${base64Credentials}`,
+            secret: true,
+        });
+    }
 
     return headers;
 }

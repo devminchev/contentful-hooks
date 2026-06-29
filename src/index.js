@@ -23,11 +23,12 @@ const getEnvSettings = () => {
         OS_USER: osUser,
         OS_PASS: osPass,
         CONTENTFUL_API_TOKEN: apiToken,
-        CONTENTFUL_SPACE: contentfulSpace
+        CONTENTFUL_SPACE: contentfulSpace,
+        BACKOFFICE_LAMBDA_URL: backofficeUrl
     } = currentConfig;
 
 
-    return { environment, osHost, contentfulEnv, osUser, osPass, apiToken, contentfulSpace };
+    return { environment, osHost, backofficeUrl, contentfulEnv, osUser, osPass, apiToken, contentfulSpace };
 }
 
 
@@ -64,7 +65,7 @@ const init = async (operation, options = {}) => {
                 await createWebhooksOnEnv({ environment: envSettings.environment, osHost: envSettings.osHost, contentfulEnv: envSettings.contentfulEnv, credentials, client });
                 break;
             case 'create-v3':
-                    await createV3WebhooksOnEnv({ environment: envSettings.environment, osHost: envSettings.osHost, contentfulEnv: envSettings.contentfulEnv, credentials, client });
+                    await createV3WebhooksOnEnv({ environment: envSettings.environment, osHost: envSettings.osHost, backofficeUrl: envSettings.backofficeUrl, contentfulEnv: envSettings.contentfulEnv, credentials, client });
                     break;
             case 'delete':
                 await deleteWebhooks(client, options);

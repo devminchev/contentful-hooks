@@ -17,6 +17,7 @@ export const FOOTER_MODEL = 'footer';
 export const FOOTER_ICON_MODEL = 'footerIcon';
 export const FOOTER_LINK_MODEL = 'footerLink';
 export const POLICY_MODEL = 'policy';
+export const PLACEHOLDER_SECTION = 'igContentPlaceholder';
 
 // V3 models
 export const IG_NAVIGATION = 'igNavigation';

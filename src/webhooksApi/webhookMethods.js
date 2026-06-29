@@ -14,6 +14,7 @@ import { gameHook,
     mlSectionsHook,
     mlDefaultsHook,
     gamesHook,
+    gamesHookLambda,
     siteGamesHook,
     themesHook
 } from './publishHooks.js';
@@ -21,8 +22,8 @@ import { validateParams, operationLogger, generateIdempotencyKey, generateUnique
 import { generalDeleteHook, gameV2DeleteHook, generalDeleteHookV3, gameV2DeleteHookV3 } from './deleteHooks.js';
 import { crateSharedHeaders } from '../hookPayloads/common/shared.js'
 
-const hookHeaderBuilder = (credentials, hookBody, nodeEnv = 'DEV') => {
-    let headers = crateSharedHeaders(credentials);
+const hookHeaderBuilder = (credentials, hookBody, nodeEnv = 'DEV', includeAuth) => {
+    let headers = crateSharedHeaders(credentials, includeAuth);
 
     // Generate the unique SHA256 hash
     const idempotencyKey = generateIdempotencyKey(hookBody);
@@ -39,7 +40,7 @@ const hookHeaderBuilder = (credentials, hookBody, nodeEnv = 'DEV') => {
 
 };
 
-export const hookBuilder = (hookBodyParams, nodeEnv, credentials, method, operation = 'create') => {
+export const hookBuilder = (hookBodyParams, nodeEnv, credentials, method, operation = 'create', includeAuth = true) => {
     const { hookName, hookUrl, topics, filters, payload } = hookBodyParams;
 
     validateParams(hookBodyParams);
@@ -65,7 +66,7 @@ export const hookBuilder = (hookBodyParams, nodeEnv, credentials, method, operat
         },
     };
 
-    const headers = hookHeaderBuilder(credentials, hookBody, nodeEnv) || {};
+    const headers = hookHeaderBuilder(credentials, hookBody, nodeEnv, includeAuth) || {};
 
     const returnObj = {
         ...hookBody,
@@ -133,11 +134,24 @@ export const createV3WebhooksOnEnv = async (envSettings) => {
     operationLogger('MLDefaults');
     await mlDefaultsHook(envSettings);
     
-    operationLogger('Games V2 for V3 API');
-    await gamesHook(envSettings);
+    /* The below webhook is deprecated in favour of the GamesV2 webhook using lambda (`gamesHookLambda`).
+        It is not compatible with the games-v3 index, as it uses a mapping schema and requires different webhook body shape!!
+        If you decide to use it please make sure you have a games-v2 index with dynamic mapping and the index aliases are setup correctly in OpenSearch!! 
+    */
+    // operationLogger('Games V2 for V3 API');
+    // await gamesHook(envSettings);
 
-    operationLogger('Site Games V2 for V3 API');
-    await siteGamesHook(envSettings)
+    /* The below webhook is deprecated in favour of the GamesV2 webhook using lambda (`gamesHookLambda`).
+        It is now also responsible for syncing the siteGameV2 data into the games-v3 index. 
+        As such DO NOT enable this if the other one is active, because having both webhooks running will create sync issues as they will be doing writes for the same model in the same os index!!
+    */
+    // operationLogger('Site Games V2 for V3 API');
+    // await siteGamesHook(envSettings)
+
+// GamesV2 webhook using lambda
+    operationLogger('Games V2 and SiteGames V2 for V3 API using Lambda');
+    await gamesHookLambda(envSettings);
+
 
     operationLogger('Themes');
     await themesHook(envSettings);

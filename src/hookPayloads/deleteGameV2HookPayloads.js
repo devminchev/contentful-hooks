@@ -43,7 +43,7 @@ export const createDeleteV2HookUrl = (osHost, version) => {
     return `${osHost}${osIndex}/_delete_by_query?refresh=true`;
 };
 
-export const createDeleteV2HookName = (nodeEnv) => createHookName(nodeEnv, WEBHOOK_SUFFIXES.gameV2Delete);
+export const createDeleteV2HookName = (nodeEnv, version = null) => createHookName(nodeEnv, WEBHOOK_SUFFIXES.gameV2Delete, version);
 
 export const createFilters = (contentfulEnv) => ([
     sharedEnvFilter(contentfulEnv),
@@ -56,7 +56,7 @@ export const createFilters = (contentfulEnv) => ([
 ]);
 
 export const deleteGameV2HookBodyParams = (nodeEnv, host, contentfulEnv, version = 'v2') => ({
-    hookName: createDeleteV2HookName(nodeEnv),
+    hookName: createDeleteV2HookName(nodeEnv, version === 'v3' ? 'v3' : null),
     hookUrl: createDeleteV2HookUrl(host, version),
     ...pickHookTopic(nodeEnv, 'delete'), 
     filters: createFilters(contentfulEnv),
